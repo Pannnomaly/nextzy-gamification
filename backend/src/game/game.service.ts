@@ -6,16 +6,22 @@ export class GameService {
   constructor(private readonly prisma: PrismaService) {}
 
   private readonly scoreOptions = [300, 500, 1000, 3000];
+  private readonly DEMO_USER_ID = 'demo-user';
 
   async playGame() {
     const randomIndex = Math.floor(Math.random() * this.scoreOptions.length);
     const score = this.scoreOptions[randomIndex];
 
-    let user = await this.prisma.user.findFirst();
+    let user = await this.prisma.user.findUnique({
+      where: { id: this.DEMO_USER_ID },
+    });
 
     if (!user) {
       user = await this.prisma.user.create({
-        data: { totalScore: 0 },
+        data: {
+          id: this.DEMO_USER_ID,
+          totalScore: 0,
+        },
       });
     }
 
@@ -38,6 +44,26 @@ export class GameService {
     return {
       earnedScore: score,
       totalScore: updatedScore.totalScore,
+    };
+  }
+
+  async getPlayHistory() {
+    const histories = await this.prisma.playHistory.findMany({
+      where: {
+        userId: this.DEMO_USER_ID,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+    });
+
+    return {
+      items: histories.map((h) => ({
+        id: h.id,
+        score: h.score,
+        playedAt: h.createdAt,
+      })),
     };
   }
 }
