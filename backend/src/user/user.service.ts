@@ -5,8 +5,11 @@ import { PrismaService } from '../prisma/prisma.service';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private readonly DEMO_USER_ID = 'demo-user';
+
   async getUserSummary() {
-    let user = await this.prisma.user.findFirst({
+    let user = await this.prisma.user.findUnique({
+      where: { id: this.DEMO_USER_ID },
       include: {
         rewards: true,
       },
@@ -15,6 +18,7 @@ export class UserService {
     if (!user) {
       user = await this.prisma.user.create({
         data: {
+          id: this.DEMO_USER_ID,
           totalScore: 0,
         },
         include: {
