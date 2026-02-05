@@ -38,6 +38,9 @@ CREATE TABLE "UserReward" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Reward_checkpoint_key" ON "Reward"("checkpoint");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "UserReward_userId_rewardId_key" ON "UserReward"("userId", "rewardId");
 
 -- AddForeignKey

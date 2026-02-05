@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  engineType = "binary"
 }
 
 datasource db {
@@ -27,7 +28,7 @@ model PlayHistory {
 model Reward {
   id         String        @id @default(uuid())
   name       String        
-  checkpoint Int           
+  checkpoint Int           @unique      
   users      UserReward[]
 }
 
