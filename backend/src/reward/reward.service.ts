@@ -57,4 +57,27 @@ export class RewardService {
       },
     };
   }
+
+  async getRewardHistory() {
+    const histories = await this.prisma.userReward.findMany({
+      where: {
+        userId: this.DEMO_USER_ID,
+      },
+      include: {
+        reward: true,
+      },
+      orderBy: {
+        claimedAt: 'desc',
+      },
+    });
+
+    return {
+      items: histories.map((h) => ({
+        id: h.id,
+        rewardName: h.reward.name,
+        checkPoint: h.reward.checkpoint,
+        claimedAt: h.claimedAt,
+      })),
+    };
+  }
 }
