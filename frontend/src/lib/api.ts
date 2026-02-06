@@ -55,14 +55,14 @@ export const api = {
     request<{
       items: {
         id: string;
-        name: string;
-        checkpoint: number;
+        rewardName: string;
+        checkPoint: number;
         claimedAt: string;
       }[];
     }>("/reward/history"),
 
   claimReward: (rewardId: string) =>
-    request("/reward/claim" + rewardId, {
+    request("/reward/claim/" + rewardId, {
       method: "POST",
     }),
 
