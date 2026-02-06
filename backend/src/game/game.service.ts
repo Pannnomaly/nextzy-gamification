@@ -9,8 +9,10 @@ export class GameService {
   private readonly DEMO_USER_ID = 'demo-user';
 
   async playGame() {
+    const MAX_SCORE = 10000;
+
     const randomIndex = Math.floor(Math.random() * this.scoreOptions.length);
-    const score = this.scoreOptions[randomIndex];
+    const randomScore = this.scoreOptions[randomIndex];
 
     let user = await this.prisma.user.findUnique({
       where: { id: this.DEMO_USER_ID },
@@ -25,9 +27,13 @@ export class GameService {
       });
     }
 
+    const remainingScore = MAX_SCORE - user.totalScore;
+    const earnedScore =
+      remainingScore > 0 ? Math.min(randomScore, remainingScore) : 0;
+
     await this.prisma.playHistory.create({
       data: {
-        score,
+        score: earnedScore,
         userId: user.id,
       },
     });
@@ -36,14 +42,15 @@ export class GameService {
       where: { id: user.id },
       data: {
         totalScore: {
-          increment: score,
+          increment: earnedScore,
         },
       },
     });
 
     return {
-      earnedScore: score,
+      earnedScore,
       totalScore: updatedScore.totalScore,
+      isMaxScoreReached: updatedScore.totalScore === MAX_SCORE,
     };
   }
 
