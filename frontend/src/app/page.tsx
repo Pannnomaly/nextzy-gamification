@@ -13,8 +13,8 @@ type PlayHistoryItem = {
 
 type RewardHistoryItem = {
   id: string;
-  name: string;
-  checkpoint: number;
+  rewardName: string;
+  checkPoint: number;
   claimedAt: string;
 };
 
@@ -77,7 +77,7 @@ export default function HomePage() {
         <p style={{ fontSize: 24, fontWeight: "bold" }}>
           {summary.totalScore.toLocaleString()}
         </p>
-        
+
         <ProgressBar current={summary.totalScore} max={10000} />
 
         <button
@@ -114,7 +114,7 @@ export default function HomePage() {
           <ul style={{ marginTop: 16 }}>
             {rewardHistory.map((item) => (
               <li key={item.id}>
-                {item.name} ({item.checkpoint}) —{" "}
+                {item.rewardName} ({item.checkPoint}) —{" "}
                 {new Date(item.claimedAt).toLocaleString()}
               </li>
             ))}
