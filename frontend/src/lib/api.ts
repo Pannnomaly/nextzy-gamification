@@ -30,12 +30,6 @@ async function request<T>(
   return res.json();
 }
 
-async function resetGame() {
-  return request<{ message: string }>('/reset', {
-    method: 'POST',
-  });
-}
-
 export const api = {
   getUserSummary: () =>
     request<{
@@ -68,7 +62,7 @@ export const api = {
     }>("/reward/history"),
 
   claimReward: (rewardId: string) =>
-    request("/reward/claim" + rewardId, {
+    request("/reward/claim/" + rewardId, {
       method: "POST",
     }),
 
