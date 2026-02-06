@@ -84,8 +84,13 @@ export default function HomePage() {
 
       await api.claimReward(rewardId);
 
-      const summaryData = await api.getUserSummary();
+      const [summaryData, rewardData] = await Promise.all([
+        api.getUserSummary(),
+        api.getRewardHistory(),
+      ]);
+
       setSummary(summaryData);
+      setRewardHistory(rewardData.items);
 
       setClaimedRewardName(rewardName);
       setShowRewardModal(true);
