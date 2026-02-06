@@ -4,8 +4,6 @@ if (!API_BASE_URL) {
   throw new Error("NEXT_PUBLIC_API_URL is not defined!");
 }
 
-console.log('API_BASE_URL:', API_BASE_URL);
-
 type FetchOptions = {
   method?: "GET" | "POST" | "PUT" | "DELETE";
   body?: unknown;
@@ -30,6 +28,12 @@ async function request<T>(
   }
 
   return res.json();
+}
+
+async function resetGame() {
+  return request<{ message: string }>('/reset', {
+    method: 'POST',
+  });
 }
 
 export const api = {

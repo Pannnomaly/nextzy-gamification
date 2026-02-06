@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { api } from "@/src/lib/api";
 import ProgressBar from "@/src/components/ProgressBar";
@@ -54,6 +54,20 @@ export default function HomePage() {
 
   if (!summary) return <div style={{ padding: 24 }}>Loading. . .</div>;
 
+  async function handleReset() {
+    await api.resetGame();
+
+    const [summaryData, playData, rewardData] = await Promise.all([
+      api.getUserSummary(),
+      api.getPlayHistory(),
+      api.getRewardHistory(),
+    ]);
+
+    setSummary(summaryData);
+    setPlayHistory(playData.items);
+    setRewardHistory(rewardData.items);
+  }
+
   return (
     <main style={{ padding: 24 }}>
       <h1>Nextzy Gamification</h1>
@@ -63,7 +77,23 @@ export default function HomePage() {
         <p style={{ fontSize: 24, fontWeight: "bold" }}>
           {summary.totalScore.toLocaleString()}
         </p>
+        
         <ProgressBar current={summary.totalScore} max={10000} />
+
+        <button
+          onClick={handleReset}
+          style={{
+            marginTop: 16,
+            padding: "8px 16px",
+            background: "#2563eb",
+            color: "white",
+            borderRadius: 6,
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          RESET
+        </button>
       </section>
 
       <section style={{ marginTop: 32 }}>
@@ -84,7 +114,7 @@ export default function HomePage() {
           <ul style={{ marginTop: 16 }}>
             {rewardHistory.map((item) => (
               <li key={item.id}>
-                {item.name} ({item.checkpoint}) — {" "}
+                {item.name} ({item.checkpoint}) —{" "}
                 {new Date(item.claimedAt).toLocaleString()}
               </li>
             ))}
