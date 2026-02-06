@@ -1,5 +1,6 @@
 type RewardCheckpointButtonProps = {
   label: string;
+  rewardName: string;
   rewardId: string;
   canClaim: boolean;
   claimed: boolean;
@@ -9,6 +10,7 @@ type RewardCheckpointButtonProps = {
 
 export default function RewardCheckpointButton({
   label,
+  rewardName,
   rewardId,
   canClaim,
   claimed,
@@ -21,7 +23,7 @@ export default function RewardCheckpointButton({
         disabled
         className="px-4 py-2 rounded-full bg-gray-200 text-gray-400 text-sm"
       >
-        Claimed
+        {`claimed ${rewardName}`}
       </button>
     );
   }

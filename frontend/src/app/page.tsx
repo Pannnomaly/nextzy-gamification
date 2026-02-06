@@ -119,6 +119,7 @@ export default function HomePage() {
             <RewardCheckpointButton
               key={reward.id}
               label={`claim ${reward.name}`}
+              rewardName={reward.name}
               rewardId={reward.id}
               canClaim={summary.totalScore >= reward.checkpoint}
               claimed={reward.claimed}
