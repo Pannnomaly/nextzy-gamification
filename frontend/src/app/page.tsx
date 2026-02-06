@@ -59,19 +59,24 @@ export default function HomePage() {
 
   if (!summary) return <div style={{ padding: 24 }}>Loading. . .</div>;
 
-  async function handleReset() {
-    await api.resetGame();
+  const handleReset = async () => {
+    try {
+      await api.resetGame();
 
-    const [summaryData, playData, rewardData] = await Promise.all([
-      api.getUserSummary(),
-      api.getPlayHistory(),
-      api.getRewardHistory(),
-    ]);
+      const [summaryData, playData, rewardData] = await Promise.all([
+        api.getUserSummary(),
+        api.getPlayHistory(),
+        api.getRewardHistory(),
+      ]);
 
-    setSummary(summaryData);
-    setPlayHistory(playData.items);
-    setRewardHistory(rewardData.items);
-  }
+      setSummary(summaryData);
+      setPlayHistory(playData.items);
+      setRewardHistory(rewardData.items);
+    } catch (error) {
+      alert("Failed to reset game!");
+      console.error(error);
+    }
+  };
 
   const handleClaimReward = async (rewardId: string, rewardName: string) => {
     try {
