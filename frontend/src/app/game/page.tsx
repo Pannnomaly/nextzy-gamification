@@ -58,7 +58,7 @@ export default function GamePage() {
 
       startAnimation(result.earnedScore);
     } catch (error) {
-      console.error(error);
+      console.error("Failed to start game", error);
       setIsPlaying(false);
     }
   };

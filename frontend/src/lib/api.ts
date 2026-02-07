@@ -13,21 +13,26 @@ async function request<T>(
   path: string,
   options: FetchOptions = {},
 ): Promise<T> {
-  const res = await fetch(`${API_BASE_URL}${path}`, {
-    method: options.method ?? "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: options.body ? JSON.stringify(options.body) : undefined,
-    cache: "no-store",
-  });
+  try {
+    const res = await fetch(`${API_BASE_URL}${path}`, {
+      method: options.method ?? "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined,
+      cache: "no-store",
+    });
 
-  if (!res.ok) {
-    const error = await res.text();
-    throw new Error(error || "API request failed!");
+    if (!res.ok) {
+      const error = await res.text();
+      throw new Error(error || "API request failed!");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("API error:", error);
+    throw error;
   }
-
-  return res.json();
 }
 
 export type PlayGameResponse = {
@@ -78,7 +83,7 @@ export const api = {
     }),
 
   playGame: () =>
-  request<PlayGameResponse>("/game/play", {
-    method: "POST",
-  }),
+    request<PlayGameResponse>("/game/play", {
+      method: "POST",
+    }),
 };
