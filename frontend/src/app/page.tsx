@@ -46,15 +46,19 @@ export default function HomePage() {
 
   useEffect(() => {
     async function fetchData() {
-      const [summaryData, playData, rewardData] = await Promise.all([
-        api.getUserSummary(),
-        api.getPlayHistory(),
-        api.getRewardHistory(),
-      ]);
+      try {
+        const [summaryData, playData, rewardData] = await Promise.all([
+          api.getUserSummary(),
+          api.getPlayHistory(),
+          api.getRewardHistory(),
+        ]);
 
-      setSummary(summaryData);
-      setPlayHistory(playData.items);
-      setRewardHistory(rewardData.items);
+        setSummary(summaryData);
+        setPlayHistory(playData.items);
+        setRewardHistory(rewardData.items);
+      } catch (error) {
+        console.error("Failed to fetch user summary", error);
+      }
     }
 
     fetchData();
@@ -76,8 +80,7 @@ export default function HomePage() {
       setPlayHistory(playData.items);
       setRewardHistory(rewardData.items);
     } catch (error) {
-      alert("Failed to reset game!");
-      console.error(error);
+      console.error("Failed to reset game", error);
     }
   };
 
@@ -98,8 +101,7 @@ export default function HomePage() {
       setClaimedRewardName(rewardName);
       setShowRewardModal(true);
     } catch (error) {
-      alert("Failed to claim reward!");
-      console.error(error);
+      console.error("Failed to claim reward", error);
     } finally {
       setClaimingRewardId(null);
     }

@@ -8,41 +8,45 @@ export class UserService {
   private readonly DEMO_USER_ID = 'demo-user';
 
   async getUserSummary() {
-    let user = await this.prisma.user.findUnique({
-      where: { id: this.DEMO_USER_ID },
-      include: {
-        rewards: true,
-      },
-    });
-
-    if (!user) {
-      user = await this.prisma.user.create({
-        data: {
-          id: this.DEMO_USER_ID,
-          totalScore: 0,
-        },
+    try {
+      let user = await this.prisma.user.findUnique({
+        where: { id: this.DEMO_USER_ID },
         include: {
           rewards: true,
         },
       });
+
+      if (!user) {
+        user = await this.prisma.user.create({
+          data: {
+            id: this.DEMO_USER_ID,
+            totalScore: 0,
+          },
+          include: {
+            rewards: true,
+          },
+        });
+      }
+
+      const rewards = await this.prisma.reward.findMany({
+        orderBy: { checkpoint: 'asc' },
+      });
+
+      const rewardStatus = rewards.map((reward) => ({
+        id: reward.id,
+        name: reward.name,
+        checkpoint: reward.checkpoint,
+        claimed: user.rewards.some(
+          (userReward) => userReward.rewardId === reward.id,
+        ),
+      }));
+
+      return {
+        totalScore: user.totalScore,
+        rewards: rewardStatus,
+      };
+    } catch (error) {
+      console.error('Failed to load user summary data', error);
     }
-
-    const rewards = await this.prisma.reward.findMany({
-      orderBy: { checkpoint: 'asc' },
-    });
-
-    const rewardStatus = rewards.map((reward) => ({
-      id: reward.id,
-      name: reward.name,
-      checkpoint: reward.checkpoint,
-      claimed: user.rewards.some(
-        (userReward) => userReward.rewardId === reward.id,
-      ),
-    }));
-
-    return {
-      totalScore: user.totalScore,
-      rewards: rewardStatus,
-    };
   }
 }
