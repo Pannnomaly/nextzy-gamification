@@ -7,7 +7,7 @@ type TabsProps = {
 
 export default function Tabs({ active, onChange }: TabsProps) {
   return (
-    <div className="flex gap-4 pl-5">
+    <div className="flex gap-4 pl-5 transition duration-300 ease-in-out">
       <button
         onClick={() => onChange("play")}
         className={`

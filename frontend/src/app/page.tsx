@@ -64,7 +64,12 @@ export default function HomePage() {
     fetchData();
   }, []);
 
-  if (!summary) return <div className="min-h-screen flex justify-center items-center">Loading. . .</div>;
+  if (!summary)
+    return (
+      <div className="min-h-screen flex justify-center items-center font-bold">
+        Loading. . .
+      </div>
+    );
 
   const handleReset = async () => {
     try {
@@ -111,19 +116,42 @@ export default function HomePage() {
     <div className="min-h-screen">
       <div className="bg-[#DDD] p-3">
         <div className="flex flex-col bg-white border-2 border-black rounded-2xl p-5">
+          <div className="absolute top-10 left-3">
+            <div
+              className="
+                bg-red-700
+                text-white
+                  text-[10px]
+                  font-[500]
+                  px-4 py-1.5
+                  rounded-r-full
+                  shadow
+                  "
+            >
+              แชร์คะแนน
+            </div>
+          </div>
           <p className="flex flex-col items-end font-semibold text-[16px] mb-2">
             สะสมคะแนน
           </p>
           <p className="flex flex-col items-end font-semibold text-[16px]">
             คะแนนครบ 10,000 รับรางวัลใหญ่
           </p>
-          <p className="flex flex-col items-end text-[#FF2428] font-bold text-[24px] mb-10">
+          <p className="flex flex-col items-end text-[#FF2428] font-bold text-[24px]">
             {summary.totalScore.toLocaleString()}/10,000
           </p>
           <div>
-            <ProgressBar current={summary.totalScore} max={10000} />
+            <ProgressBar
+              current={summary.totalScore}
+              max={10000}
+              checkpoints={summary.rewards.map((reward) => ({
+                percent: (reward.checkpoint / 10000) * 100,
+                value: reward.checkpoint,
+                claimed: reward.claimed,
+              }))}
+            />
           </div>
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-end gap-2 mt-6">
             {summary.rewards.map((reward) => (
               <RewardCheckpointButton
                 key={reward.id}
