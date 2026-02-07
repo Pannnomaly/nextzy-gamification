@@ -14,7 +14,6 @@ export default function GamePage() {
   const [totalScore, setTotalScore] = useState<number>(0);
   const [displayTotalScore, setDisplayTotalScore] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMaxReached, setIsMaxReached] = useState(false);
 
   const [lockedResult, setLockedResult] = useState<number | null>(null);
   const [fadedScores, setFadedScores] = useState<number[]>([]);
@@ -56,7 +55,6 @@ export default function GamePage() {
 
       setLockedResult(result.earnedScore);
       setTotalScore(result.totalScore);
-      setIsMaxReached(result.isMaxScoreReached);
 
       startAnimation(result.earnedScore);
     } catch (error) {
