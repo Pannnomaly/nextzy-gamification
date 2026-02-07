@@ -12,7 +12,7 @@ export class GameService {
     const MAX_SCORE = 10000;
 
     const randomIndex = Math.floor(Math.random() * this.scoreOptions.length);
-    const randomScore = this.scoreOptions[randomIndex];
+    const earnedScore = this.scoreOptions[randomIndex];
 
     let user = await this.prisma.user.findUnique({
       where: { id: this.DEMO_USER_ID },
@@ -27,9 +27,7 @@ export class GameService {
       });
     }
 
-    const remainingScore = MAX_SCORE - user.totalScore;
-    const earnedScore =
-      remainingScore > 0 ? Math.min(randomScore, remainingScore) : 0;
+    const newTotalScore = Math.min(user.totalScore + earnedScore, MAX_SCORE);
 
     await this.prisma.playHistory.create({
       data: {
@@ -41,9 +39,7 @@ export class GameService {
     const updatedScore = await this.prisma.user.update({
       where: { id: user.id },
       data: {
-        totalScore: {
-          increment: earnedScore,
-        },
+        totalScore: newTotalScore,
       },
     });
 
