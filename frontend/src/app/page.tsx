@@ -1,11 +1,13 @@
 "use client";
 
 import { api } from "@/src/lib/api";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ProgressBar from "@/src/components/ProgressBar";
 import Tabs from "@/src/components/Tabs";
-import { useEffect, useState } from "react";
 import RewardCheckpointButton from "@/src/components/RewardCheckpointButton";
 import RewardClaimModal from "@/src/components/RewardClaimModal";
+import PrimaryActionButton from "@/src/components/PrimaryActionButton";
 
 type PlayHistoryItem = {
   id: string;
@@ -33,6 +35,7 @@ type UserSummary = {
 };
 
 export default function HomePage() {
+  const router = useRouter();
   const [summary, setSummary] = useState<UserSummary | null>(null);
   const [activeTab, setActiveTab] = useState<"play" | "reward">("play");
   const [playHistory, setPlayHistory] = useState<PlayHistoryItem[]>([]);
@@ -169,6 +172,10 @@ export default function HomePage() {
             </ul>
           )}
         </section>
+        <PrimaryActionButton
+          label="ไปเล่นเกม"
+          onClick={() => router.push("/game")}
+        />
       </main>
       <RewardClaimModal
         open={showRewardModal}

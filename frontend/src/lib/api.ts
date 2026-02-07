@@ -30,6 +30,12 @@ async function request<T>(
   return res.json();
 }
 
+export type PlayGameResponse = {
+  earnedScore: number;
+  totalScore: number;
+  isMaxScoreReached: boolean;
+};
+
 export const api = {
   getUserSummary: () =>
     request<{
@@ -70,4 +76,9 @@ export const api = {
     request("/reset", {
       method: "POST",
     }),
+
+  playGame: () =>
+  request<PlayGameResponse>("/game/play", {
+    method: "POST",
+  }),
 };
