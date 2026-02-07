@@ -21,17 +21,13 @@ export default function GameResultModal({
           ✕
         </button>
 
-        <h2 className="text-lg font-bold mb-2">ได้รับ</h2>
+        <h2 className="text-[24px] font-[500] mb-2">ได้รับ</h2>
 
-        <div className="text-3xl font-bold text-green-600 mb-2">
-          {earnedScore.toLocaleString()}
-        </div>
-
-        <p className="text-sm text-gray-600 mb-6">คะแนน</p>
+        <p className="text-[16px] font-[400] mb-6">{earnedScore.toLocaleString()} คะแนน</p>
 
         <button
           onClick={onClose}
-          className="bg-yellow-400 text-white px-6 py-2 rounded-full w-full"
+          className="bg-[#FFC124] hover:bg-[#cc9a1b] text-white text-[16px] font-[600] px-6 py-2 rounded-full w-full transition duration-300 ease-in-out"
         >
           ปิด
         </button>

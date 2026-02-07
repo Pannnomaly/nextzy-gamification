@@ -7,21 +7,18 @@ export default function ProgressBar({ current, max }: ProgressBarProps) {
   const percentage = Math.min((current / max) * 100, 100);
 
   return (
-    <div style={{ marginTop: 16 }}>
-      <div
+    <div className="mb-7">
+      <div className="h-[9]"
         style={{
-          height: 12,
           background: "#eee",
           borderRadius: 6,
           overflow: "hidden",
         }}
       >
         <div
+          className="h-full bg-[#FF8158] transition duration-300 ease-in-out"
           style={{
             width: `${percentage}%`,
-            height: "100%",
-            background: "#f97316",
-            transition: "width 0.3s ease",
           }}
         />
       </div>
