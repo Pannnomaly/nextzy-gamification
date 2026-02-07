@@ -9,7 +9,6 @@ import GameResultModal from "@/src/components/GameResultModal";
 const SCORES = [300, 500, 1000, 3000];
 
 export default function GamePage() {
-
   const router = useRouter();
 
   const [totalScore, setTotalScore] = useState<number>(0);
@@ -23,7 +22,9 @@ export default function GamePage() {
 
   const [earnedScore, setEarnedScore] = useState<number | null>(null);
   const [showResultModal, setShowResultModal] = useState(false);
-  
+
+  const isScoreMaxed = totalScore >= 10000;
+
   useEffect(() => {
     const fetchSummary = async () => {
       try {
@@ -39,7 +40,12 @@ export default function GamePage() {
   }, []);
 
   const handlePlay = async () => {
-    if (isPlaying || isMaxReached) return;
+    if (isScoreMaxed) {
+    console.warn("Score already maxed. Play disabled.");
+    return;
+  }
+
+  if (isPlaying) return;
 
     setIsPlaying(true);
     setRevealResult(false);
@@ -119,8 +125,8 @@ export default function GamePage() {
           })}
         </div>
 
-        <button onClick={handlePlay} disabled={isPlaying || isMaxReached}>
-          {isMaxReached
+        <button onClick={handlePlay} disabled={isScoreMaxed || isPlaying}>
+          {isScoreMaxed
             ? "คะแนนครบแล้ว"
             : isPlaying
               ? "กำลังสุ่ม..."
