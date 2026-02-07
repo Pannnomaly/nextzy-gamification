@@ -108,7 +108,7 @@ export default function HomePage() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen">
       <div>
         <div>
           <p>สะสมคะแนน</p>
