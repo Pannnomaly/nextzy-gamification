@@ -7,29 +7,33 @@ type TabsProps = {
 
 export default function Tabs({ active, onChange }: TabsProps) {
   return (
-    <div style={{ display: "flex", gap: 12 }}>
+    <div className="flex gap-4 pl-5 transition duration-300 ease-in-out">
       <button
         onClick={() => onChange("play")}
-        style={{
-          padding: "8px 12px",
-          borderBottom:
-            active === "play" ? "2px solid #f97316" : "2px solid transparent",
-          fontWeight: active === "play" ? "bold" : "normal",
-        }}
+        className={`
+          px-4 py-1.5 font-[400] text-[13px] rounded-full border transition duration-300 ease-in-out
+          ${
+            active === "play"
+              ? "border-[#FF383C] text-[#FF383C]"
+              : "border-[#979797] text-[#979797]"
+          }
+        `}
       >
-        Play History
+        ประวัติการเล่น
       </button>
 
       <button
         onClick={() => onChange("reward")}
-        style={{
-          padding: "8px 12px",
-          borderBottom:
-            active === "reward" ? "2px solid #f97316" : "2px solid transparent",
-          fontWeight: active === "reward" ? "bold" : "normal",
-        }}
+        className={`
+          px-4 py-1.5 text-sm rounded-full border transition
+          ${
+            active === "reward"
+              ? "border-[#FF383C] text-[#FF383C]"
+              : "border-[#979797] text-[#979797]"
+          }
+        `}
       >
-        Reward History
+        ประวัติรางวัล
       </button>
     </div>
   );

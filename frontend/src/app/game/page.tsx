@@ -40,11 +40,11 @@ export default function GamePage() {
 
   const handlePlay = async () => {
     if (isScoreMaxed) {
-    console.warn("Score already maxed. Play disabled.");
-    return;
-  }
+      console.warn("Score already maxed. Play disabled.");
+      return;
+    }
 
-  if (isPlaying) return;
+    if (isPlaying) return;
 
     setIsPlaying(true);
     setRevealResult(false);
@@ -89,20 +89,12 @@ export default function GamePage() {
 
   return (
     <>
-      <main style={{ padding: 24, textAlign: "center" }}>
-        <h1>Game</h1>
-        <p style={{ fontWeight: "bold", marginBottom: 16 }}>
+      <main className="min-h-screen flex flex-col items-center bg-gradient-to-b from-[#FFF9F2] to-[#fad8af]">
+        <p className="text-[24px] font-bold mt-14 mb-20">
           คะแนนสะสม {displayTotalScore.toLocaleString()} / 10,000
         </p>
 
-        <div
-          style={{
-            display: "flex",
-            gap: 12,
-            justifyContent: "center",
-            marginBottom: 24,
-          }}
-        >
+        <div className="flex gap-3 justify-center mt-20">
           {SCORES.map((score) => {
             const isFaded = fadedScores.includes(score);
             const isFinal = revealResult && score === lockedResult;
@@ -110,9 +102,10 @@ export default function GamePage() {
             return (
               <div
                 key={score}
+                className="px-4 py-2 rounded-xl text-[#09862E] text-[24px] font-[600]"
                 style={{
                   opacity: isFaded ? 0.25 : 1,
-                  background: isFinal ? "#34d399" : "#5eead4",
+                  background: isFinal ? "#0EF76F" : "#1AE3D6",
                   transform: isFinal ? "scale(1.05)" : "scale(1)",
                   transition: "all 0.3s ease",
                 }}
@@ -123,7 +116,11 @@ export default function GamePage() {
           })}
         </div>
 
-        <button onClick={handlePlay} disabled={isScoreMaxed || isPlaying}>
+        <button
+          className="px-4 py-2 mt-14 rounded-2xl text-[20px] font-bold text-white bg-[#FF2428] hover:bg-[#c01b1e] transition duration-300 ease-in-out"
+          onClick={handlePlay}
+          disabled={isScoreMaxed || isPlaying}
+        >
           {isScoreMaxed
             ? "คะแนนครบแล้ว"
             : isPlaying
