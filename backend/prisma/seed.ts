@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 async function main() {
   const rewards = [
-    { name: 'Reward A', checkpoint: 5000 },
-    { name: 'Reward B', checkpoint: 7500 },
-    { name: 'Reward C', checkpoint: 10000 },
+    { name: 'A', checkpoint: 5000 },
+    { name: 'B', checkpoint: 7500 },
+    { name: 'C', checkpoint: 10000 },
   ];
 
   for (const reward of rewards) {
