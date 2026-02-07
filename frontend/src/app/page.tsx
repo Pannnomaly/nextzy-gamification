@@ -108,19 +108,21 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <main style={{ padding: 24 }}>
-        <h1>Nextzy Gamification</h1>
-
-        <section style={{ marginTop: 24 }}>
-          <h2>Total Score</h2>
-          <p style={{ fontSize: 24, fontWeight: "bold" }}>
-            {summary.totalScore.toLocaleString()}
+    <div>
+      <div>
+        <div>
+          <p>สะสมคะแนน</p>
+          <p>คะแนนครบ 10,000 รับรางวัลใหญ่</p>
+          <p>
+              {summary.totalScore.toLocaleString()}/10,000
           </p>
-
           <ProgressBar current={summary.totalScore} max={10000} />
+        </div>
+      </div>
+      <div>
 
-          {summary.rewards.map((reward) => (
+      </div>
+      {summary.rewards.map((reward) => (
             <RewardCheckpointButton
               key={reward.id}
               label={`claim ${reward.name}`}
@@ -147,7 +149,7 @@ export default function HomePage() {
           >
             RESET
           </button>
-        </section>
+
 
         <section style={{ marginTop: 32 }}>
           <Tabs active={activeTab} onChange={setActiveTab} />
@@ -178,12 +180,12 @@ export default function HomePage() {
           label="ไปเล่นเกม"
           onClick={() => router.push("/game")}
         />
-      </main>
+
       <RewardClaimModal
         open={showRewardModal}
         rewardName={claimedRewardName}
         onClose={() => setShowRewardModal(false)}
       />
-    </>
+    </div>
   );
 }

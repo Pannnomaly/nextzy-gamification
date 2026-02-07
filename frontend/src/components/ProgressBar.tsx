@@ -25,9 +25,6 @@ export default function ProgressBar({ current, max }: ProgressBarProps) {
           }}
         />
       </div>
-      <p style={{ marginTop: 8, fontSize: 12 }}>
-        {Math.min(current, max).toLocaleString()} / {max.toLocaleString()}
-      </p>
     </div>
   );
 }
