@@ -21,7 +21,7 @@ export default function RewardCheckpointButton({
     return (
       <button
         disabled
-        className="px-3 py-1 rounded-full text-[7px] font-[700] bg-[#FF7B7B] text-white text-sm"
+        className="px-3 py-1 rounded-full text-[8px] font-[700] bg-[#FF7B7B] text-white"
       >
         {`ได้รับรางวัล ${rewardName} แล้ว`}
       </button>
@@ -32,7 +32,7 @@ export default function RewardCheckpointButton({
     <button
       disabled={!canClaim || loading}
       onClick={() => onClaim(rewardId)}
-      className={`px-3 py-1 rounded-full text-[7px] font-[700] transition
+      className={`px-3 py-1 rounded-full text-[8px] font-[700] transition
         ${
           canClaim
             ? "bg-[#FF0004] text-white hover:bg-[#a50003]"

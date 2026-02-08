@@ -151,7 +151,7 @@ export default function HomePage() {
               }))}
             />
           </div>
-          <div className="flex justify-end gap-2 mt-6">
+          <div className="w-full flex justify-end gap-2 md:gap-16 md:pr-6 mt-6">
             {summary.rewards.map((reward) => (
               <RewardCheckpointButton
                 key={reward.id}
